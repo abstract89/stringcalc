@@ -11,14 +11,30 @@ package com.pokercompany.stringcalc;
  */
 public class StringCalculator {
 
-	public int add(String numbers) throws NumberFormatException {
+	private String separator = ",";
+
+	public StringCalculator() {
+
+	}
+
+	public StringCalculator(String separator) {
+		this.separator = separator;
+	}
+
+	public int add(String numbers) {
 		if (numbers == null) {
 			throw new NullPointerException();
-		} else if (numbers.equals("")) {
+		}
+
+		if (numbers.equals("")) {
 			return 0;
 		}
 
-		String[] numbersArray = numbers.split(",");
+		if (!numbers.matches("[0-9]+([" + separator + "][0-9]+)*[" + separator + "]?")) {
+			throw new NumberFormatException(numbers);
+		}
+
+		String[] numbersArray = numbers.split("[" + separator + "]");
 
 		int sum = 0;
 		for (String stringNumber : numbersArray) {
@@ -27,4 +43,13 @@ public class StringCalculator {
 
 		return sum;
 	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
+	}
+
 }
