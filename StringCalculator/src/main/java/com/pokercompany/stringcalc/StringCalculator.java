@@ -10,5 +10,21 @@ package com.pokercompany.stringcalc;
  * @author Horváth Dániel
  */
 public class StringCalculator {
-	
+
+	public int add(String numbers) throws NumberFormatException {
+		if (numbers == null) {
+			throw new NullPointerException();
+		} else if (numbers.equals("")) {
+			return 0;
+		}
+
+		String[] numbersArray = numbers.split(",");
+
+		int sum = 0;
+		for (String stringNumber : numbersArray) {
+			sum += Integer.valueOf(stringNumber);
+		}
+
+		return sum;
+	}
 }
