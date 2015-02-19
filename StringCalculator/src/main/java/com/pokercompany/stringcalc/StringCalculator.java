@@ -15,13 +15,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class StringCalculator {
 
-	private String separator = ",";
+	private char separator = ',';
 
 	public StringCalculator() {
 
 	}
 
-	public StringCalculator(String separator) {
+	public StringCalculator(char separator) {
 		this.separator = separator;
 	}
 
@@ -35,10 +35,10 @@ public class StringCalculator {
 		}
 
 		if (!numbers.matches("-?[0-9]+([" + separator + "]-?[0-9]+)*[" + separator + "]?")) {
-			throw new NumberFormatException(numbers);
+			throw new NumberFormatException("Error: Bad character(s) in input string: " + numbers);
 		}
 
-		List<String> numbersList = Arrays.asList(numbers.split("[" + separator + "]"));
+		List<String> numbersList = Arrays.asList(numbers.split("(?<!\\" + separator + ")[" + separator + "]"));
 		List<String> negativeNumbers = StringCalcUtil.getListWherePatternMatches(numbersList, "[-][0-9]+");
 
 		if (negativeNumbers.size() > 0) {
@@ -53,11 +53,11 @@ public class StringCalculator {
 		return sum;
 	}
 
-	public String getSeparator() {
+	public char getSeparator() {
 		return separator;
 	}
 
-	public void setSeparator(String separator) {
+	public void setSeparator(char separator) {
 		this.separator = separator;
 	}
 
