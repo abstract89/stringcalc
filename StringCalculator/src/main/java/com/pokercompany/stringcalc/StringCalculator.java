@@ -5,6 +5,10 @@
  */
 package com.pokercompany.stringcalc;
 
+import java.util.Arrays;
+import java.util.List;
+import org.apache.commons.lang.StringUtils;
+
 /**
  *
  * @author Horváth Dániel
@@ -21,7 +25,7 @@ public class StringCalculator {
 		this.separator = separator;
 	}
 
-	public int add(String numbers) {
+	public int add(String numbers) throws Exception {
 		if (numbers == null) {
 			throw new NullPointerException();
 		}
@@ -30,14 +34,19 @@ public class StringCalculator {
 			return 0;
 		}
 
-		if (!numbers.matches("[0-9]+([" + separator + "][0-9]+)*[" + separator + "]?")) {
+		if (!numbers.matches("-?[0-9]+([" + separator + "]-?[0-9]+)*[" + separator + "]?")) {
 			throw new NumberFormatException(numbers);
 		}
 
-		String[] numbersArray = numbers.split("[" + separator + "]");
+		List<String> numbersList = Arrays.asList(numbers.split("[" + separator + "]"));
+		List<String> negativeNumbers = StringCalcUtil.getListWherePatternMatches(numbersList, "[-][0-9]+");
+
+		if (negativeNumbers.size() > 0) {
+			throw new Exception("Negative not allowed: " + StringUtils.join(negativeNumbers.iterator(), ","));
+		}
 
 		int sum = 0;
-		for (String stringNumber : numbersArray) {
+		for (String stringNumber : numbersList) {
 			sum += Integer.valueOf(stringNumber);
 		}
 
