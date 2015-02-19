@@ -35,7 +35,7 @@ public class StringCalculator {
 		}
 
 		if (!numbers.matches("-?[0-9]+([" + separator + "]-?[0-9]+)*[" + separator + "]?")) {
-			throw new NumberFormatException("Error: Bad character(s) in input string: " + numbers);
+			throw new NumberFormatException("Bad character(s) in input string: " + numbers);
 		}
 
 		List<String> numbersList = Arrays.asList(numbers.split("(?<!\\" + separator + ")[" + separator + "]"));
